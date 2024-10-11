@@ -50,7 +50,7 @@ export default class FilmCard extends React.Component {
 
     return (
       <div className="filmCard">
-        <img className="image" src={posterPath} alt="movie cover" />
+        <img className="image" src={`https://image.tmdb.org/t/p/original/${poster_path}`} alt="movie cover" />
         <div className="filmInfo">
           <div className="filmAtributes">
             <div className="filmTags">
@@ -58,9 +58,7 @@ export default class FilmCard extends React.Component {
               <div className="filmDate">{formattedDate}</div>
               <div className="filmGenres">
                 {filmGenres.map((genre) => (
-                  <span className="genre" key={genre}>
-                    {genre}
-                  </span>
+                  <span className="genre" key={genre}>{genre}</span>
                 ))}
               </div>
             </div>

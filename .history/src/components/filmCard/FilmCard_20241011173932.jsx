@@ -19,11 +19,11 @@ export default class FilmCard extends React.Component {
     const { genresList } = this.props;
 
     const filmGenres = genre_ids
-      .map((genreId) => {
-        const genre = genresList.find((genre) => genre.id === genreId);
-        return genre ? genre.name : null;
-      })
-      .filter((genre) => genre !== null);
+    .map((genreId) => {
+      const genre = genresList.find((genre) => genre.id === genreId);
+      return genre ? genre.name : null;
+    })
+    .filter((genre) => genre !== null);
 
     const FormattedRate = vote_average === 10 || vote_average === 0 ? vote_average : vote_average.toFixed(1);
     let formattedDate;
@@ -50,18 +50,15 @@ export default class FilmCard extends React.Component {
 
     return (
       <div className="filmCard">
-        <img className="image" src={posterPath} alt="movie cover" />
+        <img className="image" src={posterPath} alt="movie cover"></img>
         <div className="filmInfo">
           <div className="filmAtributes">
             <div className="filmTags">
               <div className="filmTilte">{title}</div>
               <div className="filmDate">{formattedDate}</div>
               <div className="filmGenres">
-                {filmGenres.map((genre) => (
-                  <span className="genre" key={genre}>
-                    {genre}
-                  </span>
-                ))}
+                <span className="genre">Action</span>
+                <span className="genre">Drama</span>
               </div>
             </div>
             <div className={filmRateClass}>
