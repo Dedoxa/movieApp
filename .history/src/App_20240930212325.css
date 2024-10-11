@@ -1,0 +1,8 @@
+.mainArea {
+    background-color: aquamarine;
+    width: 850px;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

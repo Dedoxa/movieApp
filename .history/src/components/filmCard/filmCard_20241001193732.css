@@ -1,0 +1,12 @@
+.filmCard {
+  border-radius: 0;
+  width: 400px;
+  display: flex;
+  padding: 5px;
+}
+
+.image {
+    background-color: rgb(45, 45, 45);
+    width: 183px;
+    height: 281px;
+}

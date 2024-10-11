@@ -1,0 +1,55 @@
+.filmCard {
+  border-radius: 0;
+  width: 400px;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-color: rgb(245, 245, 245);
+  box-shadow: 5px 5px 10px rgb(195, 195, 195);
+}
+
+.image {
+  background-color: rgb(149, 149, 149);
+  max-width: 183px;
+}
+
+.filmInfo {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  padding: 10px 20px 50px 20px;
+  gap: 7px;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.filmTilte {
+  font-size: 20px;
+}
+
+.filmDate {
+  color: #827e7e;
+}
+
+.filmGenres {
+  color: #000000a6;
+  display: flex;
+  gap: 8px;
+}
+
+.genre {
+  padding: 2px 4px 3px 5px;
+  background-color: #fafafa;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
+}
+
+.filmDescription {
+  max-width: 228px;
+  line-height: 22px;
+}

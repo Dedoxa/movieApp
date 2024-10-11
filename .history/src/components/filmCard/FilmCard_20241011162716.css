@@ -1,0 +1,108 @@
+.filmCard {
+  border-radius: 0;
+  width: 487px;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-color: rgb(245, 245, 245);
+  box-shadow: 5px 5px 10px rgb(195, 195, 195);
+  @media (max-width: 420px) {
+    width: 100%;
+  }
+}
+
+.image {
+  background-color: rgb(149, 149, 149);
+  width: 183px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.filmInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  padding: 10px 12px 20px 15px;
+  gap: 7px;
+  width: 60%;
+  @media (max-width: 420px) {
+    width: 80%;
+    font-size: 24px;
+  }
+}
+
+.filmAtributes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filmTags {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 210px;
+}
+
+.filmRate, .badFilmRate,
+.lowFilmRate, .goodFilmRate,
+.goodFilmRate {
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.badFilmRate {
+  border-color: #E90000;
+}
+
+.lowFilmRate {
+  border-color: #E97E00;
+}
+
+.goodFilmRate {
+  border-color: ;
+}
+
+.starRate {
+  display: flex;
+  justify-content: end;
+}
+
+.filmTilte {
+  font-size: 20px;
+}
+
+.filmDate {
+  color: #827e7e;
+}
+
+.filmGenres {
+  color: #000000a6;
+  display: flex;
+  gap: 8px;
+}
+
+.genre {
+  padding: 2px 4px 3px 5px;
+  background-color: #fafafa;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
+}
+
+.filmDescription {
+  max-width: 228px;
+  line-height: 22px;
+  @media (max-width: 420px) {
+    max-width: 100%;
+    line-height: 40px;
+  }
+}

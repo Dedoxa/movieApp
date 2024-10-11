@@ -1,0 +1,13 @@
+.filmCard {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 454px;
+    height: 281px;
+    margin: 5px;
+    background-color: antiquewhite;
+}
+
+.image {
+    background-color: burlywood;
+    width: 100px;
+}

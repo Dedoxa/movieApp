@@ -1,0 +1,32 @@
+import React from 'react';
+import { debounce } from "lodash"
+import './SearchPanel.css';
+
+export default class SearchPanel extends React.Component {
+  state = {
+    inputValue: '',
+  };
+
+  onInputChange = debounce((e) => {
+    console.log(e.target.value);
+    this.setState({
+      inputValue: e.target.value,
+    });
+  });
+
+  render() {
+    const { inputValue } = this.state;
+
+    return (
+      <form>
+        <input
+          type="text"
+          className="searchInput"
+          placeholder="Type to search"
+          onChange={this.onInputChange}
+          value={inputValue}
+        ></input>
+      </form>
+    );
+  }
+}

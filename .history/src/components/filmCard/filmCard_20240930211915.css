@@ -1,0 +1,7 @@
+.filmCard {
+    display: flex;
+    flex-basis: 200px;
+    flex-grow: 0;
+    margin: 5px;
+    background-color: antiquewhite;
+}

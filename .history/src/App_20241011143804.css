@@ -1,0 +1,35 @@
+main {
+  background-color: rgb(235, 235, 235);
+  margin: 0 auto;
+  padding: 21px 32px;
+  width: 1010px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 0 30px rgb(177, 177, 177);
+}
+
+.cardsArea {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.centralized {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyRequest {
+  font-family: 'inter', sans-serif;
+  font-size: 1.2em;
+  color: rgb(170, 170, 170);
+  text-align: center;
+}
+
+.pageTabs {
+  height: 40px;
+}

@@ -1,0 +1,15 @@
+.mainArea {
+  background-color: rgb(235, 235, 235);
+  margin: 0 auto;
+  padding: 21px 32px;
+  width: 1010px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 36px;
+  box-shadow: 0 0 30px rgb(177, 177, 177);
+}
+
+.centralize {
+  margin: auto;
+}

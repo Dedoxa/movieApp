@@ -1,0 +1,13 @@
+body {
+  background-color: rgb(213, 213, 213);
+}
+
+#root {
+  height: 100vh;
+}
+
+.errorStyle {
+  height: 10vh;
+  font-size: 2em;
+  background-color: #d33838;
+}

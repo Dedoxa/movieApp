@@ -1,0 +1,40 @@
+import React from "react";
+import "./App.css";
+
+import FilmCard from "./components/FilmCard/FilmCard";
+
+
+export default class App extends React.Component {
+  // static defaultProps = {}
+  // static propTypes = {}
+
+  // state = {}
+
+  // _apiBase = `https://www.themoviedb.org/settings/api`;
+
+  startId = 0
+
+  options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiN2U5YjAxYzVjYTVmNGJlOGZiMWZiZjk1NTA1YTJlMiIsIm5iZiI6MTcyNzgwNTA5NS42ODM0ODgsInN1YiI6IjY2ZjgwOGU3MTQwZmJmNmExYTVmM2E5NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.g_s1qQUwmBqK_nNIpdZyEl9pjPkPNgHfu7sxMPUXgag'
+    }
+  };
+
+  render() {
+
+    const res = this.getResource('https://api.themoviedb.org/3/search/movie?query=ginger%20snaps&include_adult=false&language=en-US&page=1')
+    const { results } = res;
+
+    console.log(res)
+
+    return (
+      <main className="mainArea">
+        {results.map((movie) => {
+          return <FilmCard data={ movie }/>
+        })}
+      </main>
+    );
+  }
+}

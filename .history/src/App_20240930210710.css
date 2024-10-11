@@ -1,0 +1,7 @@
+.mainArea {
+    display: block;
+    width: 1000px;
+    background-color: green;
+    font-size: 2em;
+    color: black;
+}

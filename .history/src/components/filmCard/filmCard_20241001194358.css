@@ -1,0 +1,19 @@
+.filmCard {
+  border-radius: 0;
+  min-width: 400px;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  gap: 10px;
+  background-color: rgb(245, 245, 245);
+}
+
+.image {
+    background-color: rgb(45, 45, 45);
+    width: 183px;
+    height: 281px;
+}
+
+.description {
+
+}

@@ -1,0 +1,16 @@
+body {
+  background-color: rgb(213, 213, 213);
+}
+
+#root {
+  height: 100vh;
+}
+
+.errorStyle {
+  font-size: 2em;
+  border-radius: 5px;
+  background-color: #d65555;
+  padding: 10px;
+  color: aliceblue;
+  text-align: center;
+}
