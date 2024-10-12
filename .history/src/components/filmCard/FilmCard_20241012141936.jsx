@@ -17,16 +17,7 @@ export default class FilmCard extends React.Component {
   }
 
   componentDidMount() {
-    console.log('userRating at mounted state', this.props.data.userRating);
-    if (!this.props.data.userRating) {
-      const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
-      const idx = ratedMovies.findIndex((el) => el.id === this.props.data.id);
-      if (idx !== -1) {
-        this.props.data.userRating = ratedMovies[idx].userRating;
-        console.log('userRating after manipulations', this.props.data.userRating);
-        this.forceUpdate();
-      }
-    }
+    console.log(this.props.data.userRating);
   }
 
   handleRateChange = (value) => {
@@ -47,10 +38,6 @@ export default class FilmCard extends React.Component {
 
   render() {
     const { poster_path, title, release_date, overview, vote_average, genre_ids, userRating } = this.props.data;
-
-    if (!userRating) {
-      console.log('нет userRating');
-    }
 
     const FormattedRate = vote_average === 10 || vote_average === 0 ? vote_average : vote_average.toFixed(1);
 

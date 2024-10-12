@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import { Alert, Spin, Pagination, Button, Tabs } from 'antd';
 
-import { GenresContextProvider } from './genresContext.jsx';
 import FilmCard from './components/FilmCard/FilmCard.jsx';
 import TMDBService from './components/TMDBService/TMDBService.jsx';
 import SearchPanel from './components/SearchPanel/SearchPanel.jsx';
 
-const { Provider, Consumer } = React.createContext();
-export { Provider, Consumer };
+const { TabPane } = Tabs;
+
+export const GenresContext = React.createContext();
 
 export default class App extends React.Component {
   state = {
@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.getData(`&query=${this.state.searchText}`, this.state.currentPage);
-    this.getGenreList();
+    this.getGenres();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     }
   }
 
-  updateRequest = (newText) => {
+  replaceSearchText = (newText) => {
     this.setState({
       searchText: newText,
       currentPage: 1,
@@ -57,7 +57,7 @@ export default class App extends React.Component {
   getGenreList() {
     this.TMDB.getResource('https://api.themoviedb.org/3/genre/movie/list?language=en').then((res) => {
       this.setState({
-        genresList: res,
+        genresList: res.genres,
       });
     });
   }
@@ -73,22 +73,15 @@ export default class App extends React.Component {
   };
 
   handleTabChange = (key) => {
-    this.setState((state) => {
-      return {
-        ...state,
-        activeTabKey: key,
-      };
-    });
-  };
-
-  refreshRatedMovies = (value) => {
-    this.setState({
-      ratedMovies: value,
-    });
+    this.setState({ activeTabKey: key });
   };
 
   render() {
     const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey } = this.state;
+
+    if (!this.state.genresList) {
+      this.getGenreList();
+    }
 
     if (data instanceof Error) {
       const formattedErrorStack = data.stack.slice(data.stack.indexOf(':') + 2);
@@ -106,10 +99,12 @@ export default class App extends React.Component {
       {
         key: '1',
         label: 'Search',
+        children: null,
       },
       {
         key: '2',
         label: 'Rated',
+        children: null,
       },
     ];
 
@@ -117,22 +112,20 @@ export default class App extends React.Component {
       if (ratedMovies.length > 0) {
         return (
           <main>
-            <GenresContextProvider value={this.TMDB}>
-              <Tabs className="pageTabs" activeKey="2" centered onChange={this.handleTabChange} items={items} />
-              <div className="cardsArea">
-                {ratedMovies.map((movie) => (
-                  <FilmCard key={movie.id} data={movie} refreshRatedMovies={this.refreshRatedMovies} />
-                ))}
-              </div>
-              <Button
-                size="large"
-                onClick={() => {
-                  scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                Go up
-              </Button>
-            </GenresContextProvider>
+            <Tabs className="pageTabs" activeKey="2" centered onChange={this.handleTabChange} items={items} />
+            <div className="cardsArea">
+              {ratedMovies.map((movie) => (
+                <FilmCard key={movie.id} data={movie} />
+              ))}
+            </div>
+            <Button
+              size="large"
+              onClick={() => {
+                scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              Go up
+            </Button>
           </main>
         );
       } else {
@@ -149,7 +142,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="centralized">
             <Spin size="large" />
           </div>
@@ -160,7 +153,7 @@ export default class App extends React.Component {
     if (data.total_results > 0) {
       return (
         <main>
-          <GenresContextProvider value={this.TMDB}>
+          <Provider value={this.state.genresList}>
             <Tabs
               className="pageTabs"
               activeKey={activeTabKey}
@@ -168,7 +161,7 @@ export default class App extends React.Component {
               onChange={this.handleTabChange}
               items={items}
             />
-            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+            <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
             <Pagination
               align="center"
               current={currentPage}
@@ -182,7 +175,7 @@ export default class App extends React.Component {
             />
             <div className="cardsArea">
               {data.results.map((movie) => (
-                <FilmCard key={movie.id} data={movie} refreshRatedMovies={this.refreshRatedMovies} />
+                <FilmCard key={movie.id} data={movie} />
               ))}
             </div>
             <Button
@@ -193,14 +186,14 @@ export default class App extends React.Component {
             >
               Go up
             </Button>
-          </GenresContextProvider>
+          </Provider>
         </main>
       );
     } else {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="emptyRequest">Nothing is found</div>
         </main>
       );

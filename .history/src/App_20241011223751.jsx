@@ -29,6 +29,7 @@ export default class App extends React.Component {
   componentDidMount() {
     this.getData(`&query=${this.state.searchText}`, this.state.currentPage);
     this.getGenreList();
+    // this.TMDB.createGuestSession();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +38,7 @@ export default class App extends React.Component {
     }
   }
 
-  updateRequest = (newText) => {
+  replaceSearchText = (newText) => {
     this.setState({
       searchText: newText,
       currentPage: 1,
@@ -74,6 +75,7 @@ export default class App extends React.Component {
 
   handleTabChange = (key) => {
     this.setState((state) => {
+      console.log(state.ratedMovies);
       return {
         ...state,
         activeTabKey: key,
@@ -87,8 +89,25 @@ export default class App extends React.Component {
     });
   };
 
+  // handleRateChange = (value) => {
+  //   console.log("value: ", value);
+  //   const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
+
+  //   const ratedMovie = {
+  //     ...this.data.results,
+  //     userRating: value,
+  //   };
+
+  //   const updatedRatedMovies = [...ratedMovies.filter((movie) => movie.id !== ratedMovie.id), ratedMovie];
+
+  //   localStorage.setItem('ratedMovies', JSON.stringify(updatedRatedMovies));
+  //   this.setState({
+  //     ratedMovies: updatedRatedMovies,
+  //   });
+  // };
+
   render() {
-    const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey } = this.state;
+    const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey, genresList } = this.state;
 
     if (data instanceof Error) {
       const formattedErrorStack = data.stack.slice(data.stack.indexOf(':') + 2);
@@ -106,10 +125,12 @@ export default class App extends React.Component {
       {
         key: '1',
         label: 'Search',
+        children: null,
       },
       {
         key: '2',
         label: 'Rated',
+        children: null,
       },
     ];
 
@@ -121,7 +142,7 @@ export default class App extends React.Component {
               <Tabs className="pageTabs" activeKey="2" centered onChange={this.handleTabChange} items={items} />
               <div className="cardsArea">
                 {ratedMovies.map((movie) => (
-                  <FilmCard key={movie.id} data={movie} refreshRatedMovies={this.refreshRatedMovies} />
+                  <FilmCard key={movie.id} data={movie} />
                 ))}
               </div>
               <Button
@@ -149,7 +170,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="centralized">
             <Spin size="large" />
           </div>
@@ -160,6 +181,7 @@ export default class App extends React.Component {
     if (data.total_results > 0) {
       return (
         <main>
+          {/* <Provider value={genresList}> */}
           <GenresContextProvider value={this.TMDB}>
             <Tabs
               className="pageTabs"
@@ -168,7 +190,7 @@ export default class App extends React.Component {
               onChange={this.handleTabChange}
               items={items}
             />
-            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+            <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
             <Pagination
               align="center"
               current={currentPage}
@@ -194,13 +216,14 @@ export default class App extends React.Component {
               Go up
             </Button>
           </GenresContextProvider>
+          {/* </Provider> */}
         </main>
       );
     } else {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="emptyRequest">Nothing is found</div>
         </main>
       );

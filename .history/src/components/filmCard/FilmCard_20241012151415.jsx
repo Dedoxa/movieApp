@@ -24,7 +24,6 @@ export default class FilmCard extends React.Component {
       if (idx !== -1) {
         this.props.data.userRating = ratedMovies[idx].userRating;
         console.log('userRating after manipulations', this.props.data.userRating);
-        this.forceUpdate();
       }
     }
   }

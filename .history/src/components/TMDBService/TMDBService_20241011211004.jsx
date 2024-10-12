@@ -19,6 +19,7 @@ export default class TMDBService extends React.Component {
       }
 
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.error('Ошибка при получении данных:', error);
@@ -35,10 +36,28 @@ export default class TMDBService extends React.Component {
       }
 
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.error('Ошибка при получении данных:', error);
       return error;
     }
   }
+
+  // async createGuestSession() {
+  //   try {
+  //     const response = await fetch(`https://api.themoviedb.org/3/authentication/guest_session/new`, this.options);
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+
+  //     const data = await response.json();
+  //     console.log(data.guest_session_id);
+  //     return data.guest_session_id;
+  //   } catch (error) {
+  //     console.error('Ошибка при получении данных:', error);
+  //     return error;
+  //   }
+  // }
 }

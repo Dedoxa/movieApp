@@ -15,7 +15,7 @@ export default class SearchPanel extends React.Component {
     this.setState({
       inputValue: value,
     });
-    if (this.state.inputValue !== null || this.state.inputValue.trim() !== '') {
+    if (this.state.inputValue !== null || this.state.inputValue !== '') {
       this.props.cleanData();
       this.delayedUpdateRequest();
     }

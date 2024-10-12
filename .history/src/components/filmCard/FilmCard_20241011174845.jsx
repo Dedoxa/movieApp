@@ -1,9 +1,7 @@
 import React from 'react';
 import { parseISO, format } from 'date-fns';
-import { Rate, Flex } from 'antd';
-
+import { Rate } from 'antd';
 import './FilmCard.css';
-import { Genres } from '../../genresContext.jsx';
 
 export default class FilmCard extends React.Component {
   reduceString(string, maxLength) {
@@ -16,19 +14,6 @@ export default class FilmCard extends React.Component {
     return string;
   }
 
-  componentDidMount() {
-    console.log('userRating at mounted state', this.props.data.userRating);
-    if (!this.props.data.userRating) {
-      const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
-      const idx = ratedMovies.findIndex((el) => el.id === this.props.data.id);
-      if (idx !== -1) {
-        this.props.data.userRating = ratedMovies[idx].userRating;
-        console.log('userRating after manipulations', this.props.data.userRating);
-        this.forceUpdate();
-      }
-    }
-  }
-
   handleRateChange = (value) => {
     const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
 
@@ -38,28 +23,27 @@ export default class FilmCard extends React.Component {
     };
 
     const updatedRatedMovies = [...ratedMovies.filter((movie) => movie.id !== ratedMovie.id), ratedMovie];
-    // const idx = ratedMovies.findIndex((el) => el.id === ratedMovie.id);
-    // const updatedRatedMovies = ratedMovies.splice(idx, 1, ratedMovie);
 
     localStorage.setItem('ratedMovies', JSON.stringify(updatedRatedMovies));
-    this.props.refreshRatedMovies(updatedRatedMovies);
   };
 
   render() {
-    const { poster_path, title, release_date, overview, vote_average, genre_ids, userRating } = this.props.data;
+    const { poster_path, title, release_date, overview, vote_average, genre_ids } = this.props.data;
+    const { genresList } = this.props;
 
-    if (!userRating) {
-      console.log('нет userRating');
-    }
+    const filmGenres = genre_ids
+      .map((genreId) => {
+        const genre = genresList.find((genre) => genre.id === genreId);
+        return genre ? genre.name : null;
+      })
+      .filter((genre) => genre !== null);
 
     const FormattedRate = vote_average === 10 || vote_average === 0 ? vote_average : vote_average.toFixed(1);
-
     let formattedDate;
+
     release_date ? (formattedDate = format(parseISO(release_date), 'LLLL d, yyyy')) : (formattedDate = '[Not found]');
 
-    const posterPath = !poster_path
-      ? '../../../public/noPoster.jpg'
-      : `https://image.tmdb.org/t/p/original/${poster_path}`;
+    const posterPath = `https://image.tmdb.org/t/p/original/${poster_path}`;
 
     const finalOverview = this.reduceString(overview, 150);
 
@@ -86,9 +70,11 @@ export default class FilmCard extends React.Component {
               <div className="filmTilte">{title}</div>
               <div className="filmDate">{formattedDate}</div>
               <div className="filmGenres">
-                <Flex wrap>
-                  <Genres ids={genre_ids} />
-                </Flex>
+                {filmGenres.map((genre) => (
+                  <span className="genre" key={genre}>
+                    {genre}
+                  </span>
+                ))}
               </div>
             </div>
             <div className={filmRateClass}>
@@ -96,7 +82,7 @@ export default class FilmCard extends React.Component {
             </div>
           </div>
           <div className="filmDescription">{finalOverview}</div>
-          <Rate allowHalf defaultValue={userRating} count={10} className="starRate" onChange={this.handleRateChange} />
+          <Rate allowHalf count={10} className="starRate" onChange={this.handleRateChange} />
         </div>
       </div>
     );

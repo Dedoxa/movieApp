@@ -17,7 +17,7 @@ export default class SearchPanel extends React.Component {
     });
     if (this.state.inputValue !== null || this.state.inputValue.trim() !== '') {
       this.props.cleanData();
-      this.delayedUpdateRequest();
+      // this.delayedUpdateRequest();
     }
   };
 

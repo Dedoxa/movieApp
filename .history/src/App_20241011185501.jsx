@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { Alert, Spin, Pagination, Button, Tabs } from 'antd';
 
-import { GenresContextProvider } from './genresContext.jsx';
 import FilmCard from './components/FilmCard/FilmCard.jsx';
 import TMDBService from './components/TMDBService/TMDBService.jsx';
 import SearchPanel from './components/SearchPanel/SearchPanel.jsx';
@@ -28,7 +27,6 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.getData(`&query=${this.state.searchText}`, this.state.currentPage);
-    this.getGenreList();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +35,7 @@ export default class App extends React.Component {
     }
   }
 
-  updateRequest = (newText) => {
+  replaceSearchText = (newText) => {
     this.setState({
       searchText: newText,
       currentPage: 1,
@@ -57,7 +55,7 @@ export default class App extends React.Component {
   getGenreList() {
     this.TMDB.getResource('https://api.themoviedb.org/3/genre/movie/list?language=en').then((res) => {
       this.setState({
-        genresList: res,
+        genresList: res.genres,
       });
     });
   }
@@ -73,22 +71,15 @@ export default class App extends React.Component {
   };
 
   handleTabChange = (key) => {
-    this.setState((state) => {
-      return {
-        ...state,
-        activeTabKey: key,
-      };
-    });
-  };
-
-  refreshRatedMovies = (value) => {
-    this.setState({
-      ratedMovies: value,
-    });
+    this.setState({ activeTabKey: key });
   };
 
   render() {
     const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey } = this.state;
+
+    if (!this.state.genresList) {
+      this.getGenreList();
+    }
 
     if (data instanceof Error) {
       const formattedErrorStack = data.stack.slice(data.stack.indexOf(':') + 2);
@@ -106,10 +97,12 @@ export default class App extends React.Component {
       {
         key: '1',
         label: 'Search',
+        children: null,
       },
       {
         key: '2',
         label: 'Rated',
+        children: null,
       },
     ];
 
@@ -117,22 +110,20 @@ export default class App extends React.Component {
       if (ratedMovies.length > 0) {
         return (
           <main>
-            <GenresContextProvider value={this.TMDB}>
-              <Tabs className="pageTabs" activeKey="2" centered onChange={this.handleTabChange} items={items} />
-              <div className="cardsArea">
-                {ratedMovies.map((movie) => (
-                  <FilmCard key={movie.id} data={movie} refreshRatedMovies={this.refreshRatedMovies} />
-                ))}
-              </div>
-              <Button
-                size="large"
-                onClick={() => {
-                  scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                Go up
-              </Button>
-            </GenresContextProvider>
+            <Tabs className="pageTabs" activeKey="2" centered onChange={this.handleTabChange} items={items} />
+            <div className="cardsArea">
+              {ratedMovies.map((movie) => (
+                <FilmCard key={movie.id} data={movie} />
+              ))}
+            </div>
+            <Button
+              size="large"
+              onClick={() => {
+                scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              Go up
+            </Button>
           </main>
         );
       } else {
@@ -149,7 +140,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="centralized">
             <Spin size="large" />
           </div>
@@ -160,47 +151,68 @@ export default class App extends React.Component {
     if (data.total_results > 0) {
       return (
         <main>
-          <GenresContextProvider value={this.TMDB}>
+          <Provider value={this.state.genresList.genres}>
             <Tabs
               className="pageTabs"
-              activeKey={activeTabKey}
-              centered
+              defaultActiveKey={activeTabKey}
               onChange={this.handleTabChange}
-              items={items}
+              centered
+              items={this._tabs}
             />
-            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
-            <Pagination
-              align="center"
-              current={currentPage}
-              pageSize={this._CardsPerPage}
-              total={totalPages * this._CardsPerPage}
-              onChange={this.handlePageChange}
-              showSizeChanger={false}
-              pageSizeOptions={[]}
-              showTotal={() => `Found ${totalResults} movies`}
-              hideOnSinglePage={true}
-            />
-            <div className="cardsArea">
-              {data.results.map((movie) => (
-                <FilmCard key={movie.id} data={movie} refreshRatedMovies={this.refreshRatedMovies} />
-              ))}
-            </div>
-            <Button
-              size="large"
-              onClick={() => {
-                scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              Go up
-            </Button>
-          </GenresContextProvider>
+            {activeTabKey === '1' && (
+              <>
+                <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
+                {!data || !data.results ? (
+                  <div className="centralized">
+                    <Spin size="large" />
+                  </div>
+                ) : (
+                  <>
+                    <Pagination
+                      align="center"
+                      current={currentPage}
+                      pageSize={this._CardsPerPage}
+                      total={totalPages * this._CardsPerPage}
+                      onChange={this.handlePageChange}
+                      showSizeChanger={false}
+                      pageSizeOptions={[]}
+                      showTotal={() => `Found ${totalResults} movies`}
+                      hideOnSinglePage={true}
+                    />
+                    <div className="cardsArea">
+                      {data.results.map((movie) => (
+                        <FilmCard key={movie.id} data={movie} />
+                      ))}
+                    </div>
+                    <Button
+                      size="large"
+                      onClick={() => {
+                        scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Go up
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
+            {activeTabKey === '2' && (
+              <div className="cardsArea">
+                {ratedMovies.length > 0 ? (
+                  ratedMovies.map((movie) => <FilmCard key={movie.id} data={movie} />)
+                ) : (
+                  <div className="emptyRequest">No rated movies found</div>
+                )}
+              </div>
+            )}
+          </Provider>
         </main>
       );
     } else {
       return (
         <main>
-          <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <Tabs className="pageTabs" defaultActiveKey="1" centered items={this._tabs} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="emptyRequest">Nothing is found</div>
         </main>
       );

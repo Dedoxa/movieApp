@@ -19,6 +19,7 @@ export default class TMDBService extends React.Component {
       }
 
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.error('Ошибка при получении данных:', error);
@@ -35,6 +36,24 @@ export default class TMDBService extends React.Component {
       }
 
       const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Ошибка при получении данных:', error);
+      return error;
+    }
+  }
+
+  async createGuestSession() {
+    try {
+      const response = await fetch(`${url}`, this.options);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       console.error('Ошибка при получении данных:', error);

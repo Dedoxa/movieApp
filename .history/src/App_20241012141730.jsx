@@ -37,7 +37,7 @@ export default class App extends React.Component {
     }
   }
 
-  updateRequest = (newText) => {
+  replaceSearchText = (newText) => {
     this.setState({
       searchText: newText,
       currentPage: 1,
@@ -149,7 +149,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="centralized">
             <Spin size="large" />
           </div>
@@ -168,7 +168,7 @@ export default class App extends React.Component {
               onChange={this.handleTabChange}
               items={items}
             />
-            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+            <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
             <Pagination
               align="center"
               current={currentPage}
@@ -200,7 +200,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.replaceSearchText} />
           <div className="emptyRequest">Nothing is found</div>
         </main>
       );
