@@ -16,7 +16,7 @@
   width: 183px;
   flex-shrink: 0;
   flex-grow: 0;
-  @media (max-width:420px) {
+  @media (max-width: 420px) {
     display: none;
   }
 }
@@ -26,7 +26,7 @@
   background-color: rgb(149, 149, 149);
   flex-shrink: 0;
   flex-grow: 0;
-  @media (max-width:420px) {
+  @media (max-width: 420px) {
     display: block;
     width: 120px;
   }
@@ -131,7 +131,7 @@
   text-align: start;
   margin: 4px 4px 0 0;
   font-size: 12px;
-  line-height: 22px; 
+  line-height: 22px;
   @media (max-width: 420px) {
     font-size: 20px;
   }

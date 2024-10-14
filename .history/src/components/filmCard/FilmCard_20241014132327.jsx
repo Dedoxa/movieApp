@@ -48,7 +48,9 @@ export default class FilmCard extends React.Component {
     let formattedDate;
     release_date ? (formattedDate = format(parseISO(release_date), 'LLLL d, yyyy')) : (formattedDate = '[Not found]');
 
-    const posterPath = !poster_path ? `${noPoster}` : `https://image.tmdb.org/t/p/original/${poster_path}`;
+    const posterPath = !poster_path
+      ? `${noPoster}`
+      : `https://image.tmdb.org/t/p/original/${poster_path}`;
 
     const finalOverview = this.reduceString(overview, 150);
 
