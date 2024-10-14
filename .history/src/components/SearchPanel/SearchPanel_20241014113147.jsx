@@ -6,6 +6,9 @@ export default class SearchPanel extends React.Component {
   state = {
     inputValue: this.props.searchText,
   };
+  // state = {
+  //   inputValue: '',
+  // };
 
   componentDidMount() {
     this.inputRef.focus();
@@ -17,6 +20,7 @@ export default class SearchPanel extends React.Component {
   }, 1000);
 
   onInputChange = (value) => {
+    console.log(value);
     this.setState({
       inputValue: value,
     });

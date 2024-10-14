@@ -16,6 +16,10 @@ export default class FilmCard extends React.Component {
     return string;
   }
 
+  // componentDidMount() {
+    
+  // }
+
   handleRateChange = (value) => {
     const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
 
@@ -25,6 +29,8 @@ export default class FilmCard extends React.Component {
     };
 
     const updatedRatedMovies = [ratedMovie, ...ratedMovies.filter((movie) => movie.id !== ratedMovie.id)];
+    // const idx = ratedMovies.findIndex((el) => el.id === ratedMovie.id);
+    // const updatedRatedMovies = ratedMovies.splice(idx, 1, ratedMovie);
 
     localStorage.setItem('ratedMovies', JSON.stringify(updatedRatedMovies));
     this.props.refreshRatedMovies(updatedRatedMovies);

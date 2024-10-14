@@ -4,15 +4,14 @@ import './SearchPanel.css';
 
 export default class SearchPanel extends React.Component {
   state = {
-    inputValue: this.props.searchText,
+    inputValue: '',
   };
 
   componentDidMount() {
-    this.inputRef.focus();
+    this.inputRef.
   }
 
-  delayedCleanAndUpdateData = debounce(() => {
-    this.props.cleanData();
+  delayedUpdateRequest = debounce(() => {
     this.props.updateRequest(this.state.inputValue);
   }, 1000);
 
@@ -20,8 +19,9 @@ export default class SearchPanel extends React.Component {
     this.setState({
       inputValue: value,
     });
-    if (!this.state.inputValue || this.state.inputValue.trim() !== '') {
-      this.delayedCleanAndUpdateData();
+    if (this.state.inputValue !== null || this.state.inputValue.trim() !== '') {
+      this.props.cleanData();
+      this.delayedUpdateRequest();
     }
   };
 

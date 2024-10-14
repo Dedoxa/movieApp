@@ -62,11 +62,11 @@ export default class App extends React.Component {
     });
   }
 
-  cleanData = () => {
+  cleanData() {
     this.setState({
       data: null,
     });
-  };
+  }
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });

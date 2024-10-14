@@ -88,7 +88,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey, searchText } = this.state;
+    const { data, currentPage, totalPages, totalResults, ratedMovies, activeTabKey } = this.state;
 
     if (data instanceof Error) {
       const formattedErrorStack = data.stack.slice(data.stack.indexOf(':') + 2);
@@ -125,7 +125,6 @@ export default class App extends React.Component {
                     key={movie.id}
                     data={movie}
                     refreshRatedMovies={this.refreshRatedMovies}
-                    activeTabKey={activeTabKey}
                   />
                 ))}
               </div>
@@ -154,7 +153,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} searchText={searchText} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
           <div className="centralized">
             <Spin size="large" />
           </div>
@@ -173,7 +172,7 @@ export default class App extends React.Component {
               onChange={this.handleTabChange}
               items={items}
             />
-            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} searchText={searchText} />
+            <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
             <Pagination
               align="center"
               current={currentPage}
@@ -191,7 +190,6 @@ export default class App extends React.Component {
                   key={movie.id}
                   data={movie}
                   refreshRatedMovies={this.refreshRatedMovies}
-                  activeTabKey={activeTabKey}
                 />
               ))}
             </div>
@@ -210,7 +208,7 @@ export default class App extends React.Component {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />
-          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} searchText={searchText} />
+          <SearchPanel cleanData={this.cleanData} updateRequest={this.updateRequest} />
           <div className="emptyRequest">Nothing is found</div>
         </main>
       );

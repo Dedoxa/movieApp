@@ -16,6 +16,19 @@ export default class FilmCard extends React.Component {
     return string;
   }
 
+  componentDidMount() {
+    console.log('userRating at mounted state', this.props.data.userRating);
+    if (!this.props.data.userRating) {
+      const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
+      const idx = ratedMovies.findIndex((el) => el.id === this.props.data.id);
+      if (idx !== -1) {
+        this.props.data.userRating = ratedMovies[idx].userRating;
+        console.log('userRating after manipulations', this.props.data.userRating);
+        this.forceUpdate();
+      }
+    }
+  }
+
   handleRateChange = (value) => {
     const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
 
@@ -24,23 +37,20 @@ export default class FilmCard extends React.Component {
       userRating: value,
     };
 
-    const updatedRatedMovies = [ratedMovie, ...ratedMovies.filter((movie) => movie.id !== ratedMovie.id)];
+    const updatedRatedMovies = [...ratedMovies.filter((movie) => movie.id !== ratedMovie.id), ratedMovie];
+    // const idx = ratedMovies.findIndex((el) => el.id === ratedMovie.id);
+    // const updatedRatedMovies = ratedMovies.splice(idx, 1, ratedMovie);
 
     localStorage.setItem('ratedMovies', JSON.stringify(updatedRatedMovies));
     this.props.refreshRatedMovies(updatedRatedMovies);
   };
 
   render() {
-    if (!this.props.data.userRating) {
-      const ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
-      const idx = ratedMovies.findIndex((el) => el.id === this.props.data.id);
-      if (idx !== -1) {
-        this.props.data.userRating = ratedMovies[idx].userRating;
-      }
-    }
-
     const { poster_path, title, release_date, overview, vote_average, genre_ids, userRating } = this.props.data;
-    const { activeTabKey } = this.props;
+
+    if (!userRating) {
+      console.log('нет userRating');
+    }
 
     const FormattedRate = vote_average === 10 || vote_average === 0 ? vote_average : vote_average.toFixed(1);
 
@@ -66,9 +76,6 @@ export default class FilmCard extends React.Component {
     if (FormattedRate > 7) {
       filmRateClass = 'goodFilmRate';
     }
-
-    const changableRate = activeTabKey === '2' ? true : false;
-
     return (
       <div className="filmCard">
         <img className="image" src={posterPath} alt="movie cover" />
@@ -88,14 +95,7 @@ export default class FilmCard extends React.Component {
             </div>
           </div>
           <div className="filmDescription">{finalOverview}</div>
-          <Rate
-            allowHalf
-            disabled={changableRate}
-            defaultValue={userRating}
-            count={10}
-            className="starRate"
-            onChange={this.handleRateChange}
-          />
+          <Rate allowHalf disabled={this.props.activeTabKey && true} defaultValue={userRating} count={10} className="starRate" onChange={this.handleRateChange} />
         </div>
       </div>
     );

@@ -6,22 +6,26 @@ export default class SearchPanel extends React.Component {
   state = {
     inputValue: this.props.searchText,
   };
+  // state = {
+  //   inputValue: '',
+  // };
 
   componentDidMount() {
     this.inputRef.focus();
   }
 
-  delayedCleanAndUpdateData = debounce(() => {
-    this.props.cleanData();
+  delayedUpdateRequest = debounce(() => {
     this.props.updateRequest(this.state.inputValue);
   }, 1000);
 
   onInputChange = (value) => {
+    console.log(value);
     this.setState({
       inputValue: value,
     });
     if (!this.state.inputValue || this.state.inputValue.trim() !== '') {
-      this.delayedCleanAndUpdateData();
+      // this.props.cleanData();
+      this.delayedUpdateRequest();
     }
   };
 
