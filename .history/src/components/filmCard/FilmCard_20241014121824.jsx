@@ -71,10 +71,9 @@ export default class FilmCard extends React.Component {
 
     return (
       <div className="filmCard">
-        <img className="bigScreenImage" src={posterPath} alt="movie cover" />
+        <img className="image" src={posterPath} alt="movie cover" />
         <div className="filmInfo">
           <div className="filmAtributes">
-            <img className="smallScreenImage" src={posterPath} alt="movie cover" />
             <div className="filmTags">
               <div className="filmTilte">{title}</div>
               <div className="filmDate">{formattedDate}</div>

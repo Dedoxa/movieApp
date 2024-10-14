@@ -1,0 +1,15 @@
+.searchInput {
+  font-size: 1.2em;
+  padding: 3px 0px 3px 12px;
+  width: 98.7%;
+  height: 40px;
+  border: 1px solid #c2c2c2;
+  border-radius: 7px;
+  @media (max-width: 420px) {
+    background-color: red;
+  }
+}
+
+.searchInput::placeholder {
+  color: #c2c2c2;
+}

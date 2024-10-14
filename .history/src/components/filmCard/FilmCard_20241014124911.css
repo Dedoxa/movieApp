@@ -11,24 +11,15 @@
   }
 }
 
-.bigScreenImage {
+.image {
   background-color: rgb(149, 149, 149);
   width: 183px;
+  margin-left: -15px;
   flex-shrink: 0;
   flex-grow: 0;
-  @media (max-width:420px) {
-    display: none;
-  }
-}
-
-.smallScreenImage {
-  display: none;
-  background-color: rgb(149, 149, 149);
-  flex-shrink: 0;
-  flex-grow: 0;
-  @media (max-width:420px) {
-    display: block;
+  @media (max-width: 420px) {
     width: 120px;
+    margin-left: -45px;
   }
 }
 
@@ -40,19 +31,15 @@
   font-size: 12px;
   padding: 10px 12px 20px 15px;
   gap: 7px;
-  width: 60%;
+  width: 100%;
   @media (max-width: 420px) {
-    width: 100%;
     font-size: 24px;
   }
 }
 
 .filmAtributes {
   display: flex;
-  justify-content: space-between;
-  @media (max-width: 420px) {
-    flex-direction: row;
-  }
+  justify-content: space-evenly;
 }
 
 .filmTags {
@@ -62,7 +49,7 @@
   gap: 7px;
   width: 210px;
   @media (max-width: 420px) {
-    margin-left: -80px;
+    margin-left: -35px;
     width: 700px;
   }
 }
@@ -72,6 +59,8 @@
 .lowFilmRate,
 .middleFilmRate,
 .goodFilmRate {
+  position: relative;
+  left: 15px;
   width: 20px;
   height: 20px;
   padding: 5px;
@@ -83,6 +72,7 @@
   align-items: center;
   font-weight: bold;
   @media (max-width: 420px) {
+    left: 45px;
     width: 30px;
     height: 30px;
     font-size: 20px;
@@ -137,11 +127,23 @@
   }
 }
 
-.filmDescription {
+.filmBigScreenDescription,
+.filmSmallScreenDescription {
   max-width: 228px;
   line-height: 22px;
+}
+
+.filmSmallScreenDescription {
+  display: none;
   @media (max-width: 420px) {
+    display: block;
     max-width: 100%;
     line-height: 40px;
+  }
+}
+
+.filmBigScreenDescription {
+  @media (max-width: 420px) {
+    display: none;
   }
 }

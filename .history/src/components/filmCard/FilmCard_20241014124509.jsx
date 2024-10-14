@@ -71,10 +71,9 @@ export default class FilmCard extends React.Component {
 
     return (
       <div className="filmCard">
-        <img className="bigScreenImage" src={posterPath} alt="movie cover" />
         <div className="filmInfo">
           <div className="filmAtributes">
-            <img className="smallScreenImage" src={posterPath} alt="movie cover" />
+            <img className="image" src={posterPath} alt="movie cover" />
             <div className="filmTags">
               <div className="filmTilte">{title}</div>
               <div className="filmDate">{formattedDate}</div>
@@ -83,12 +82,13 @@ export default class FilmCard extends React.Component {
                   <Genres ids={genre_ids} />
                 </Flex>
               </div>
+              <div className="filmBigScreenDescription">{finalOverview}</div>
             </div>
             <div className={filmRateClass}>
               <span>{FormattedRate}</span>
             </div>
           </div>
-          <div className="filmDescription">{finalOverview}</div>
+          <div className="filmSmallScreenDescription">{finalOverview}</div>
           <Rate
             allowHalf
             disabled={changableRate}

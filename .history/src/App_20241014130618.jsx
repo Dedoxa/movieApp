@@ -206,7 +206,7 @@ export default class App extends React.Component {
           </GenresContextProvider>
         </main>
       );
-    } else if (data.total_results <= 0 || searchText === '') {
+    } else if (data.total_results <= 0 || !searchText) {
       return (
         <main>
           <Tabs className="pageTabs" activeKey={activeTabKey} centered onChange={this.handleTabChange} items={items} />

@@ -6,30 +6,13 @@
   flex-grow: 0;
   background-color: rgb(245, 245, 245);
   box-shadow: 5px 5px 10px rgb(195, 195, 195);
-  @media (max-width: 420px) {
-    width: 100%;
-  }
 }
 
-.bigScreenImage {
+.image {
   background-color: rgb(149, 149, 149);
   width: 183px;
   flex-shrink: 0;
   flex-grow: 0;
-  @media (max-width:420px) {
-    display: none;
-  }
-}
-
-.smallScreenImage {
-  display: none;
-  background-color: rgb(149, 149, 149);
-  flex-shrink: 0;
-  flex-grow: 0;
-  @media (max-width:420px) {
-    display: block;
-    width: 120px;
-  }
 }
 
 .filmInfo {
@@ -41,30 +24,18 @@
   padding: 10px 12px 20px 15px;
   gap: 7px;
   width: 60%;
-  @media (max-width: 420px) {
-    width: 100%;
-    font-size: 24px;
-  }
 }
 
 .filmAtributes {
   display: flex;
   justify-content: space-between;
-  @media (max-width: 420px) {
-    flex-direction: row;
-  }
 }
 
 .filmTags {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   gap: 7px;
   width: 210px;
-  @media (max-width: 420px) {
-    margin-left: -80px;
-    width: 700px;
-  }
 }
 
 .filmRate,
@@ -82,11 +53,6 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  @media (max-width: 420px) {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-  }
 }
 
 .badFilmRate {
@@ -112,9 +78,6 @@
 
 .filmTilte {
   font-size: 20px;
-  @media (max-width: 420px) {
-    font-size: 30px;
-  }
 }
 
 .filmDate {
@@ -128,19 +91,28 @@
 }
 
 .genre {
-  text-align: start;
-  margin: 4px 4px 0 0;
-  font-size: 12px;
-  line-height: 22px; 
-  @media (max-width: 420px) {
-    font-size: 20px;
-  }
+  padding: 2px 4px 3px 5px;
+  background-color: #fafafa;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
 }
 
 .filmDescription {
   max-width: 228px;
   line-height: 22px;
-  @media (max-width: 420px) {
+}
+
+@media (max-width: 420px) {
+  .filmCard {
+    width: 100%;
+  }
+
+  .filmInfo {
+    width: 80%;
+    font-size: 24px;
+  }
+
+  .filmDescription {
     max-width: 100%;
     line-height: 40px;
   }

@@ -47,7 +47,7 @@ export const Genres = ({ ids }) => {
     <>
       {ids.map((id) => {
         return (
-          <Tag key={id} className="genre">
+          <Tag key={id} style={{ textAlign: 'start', margin: '4px 4px 0 0', fontSize: '12px', lineHeight: '22px' }}>
             {genres[id]}
           </Tag>
         );
