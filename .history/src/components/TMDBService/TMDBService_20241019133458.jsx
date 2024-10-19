@@ -12,8 +12,8 @@ export default class TMDBService extends React.Component {
 
   async getMovies(query) {
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?${query}`, this.options);
-      // const response = await fetch(`https://api.themoviedb.org/3/search/movie/api_key=db1fd22871a66e79e9c07fee4b498832$${query}`);
+      // const response = await fetch(`https://api.themoviedb.org/3/search/movie?${query}`, this.options);
+      const response = await fetch(`https://api.themoviedb.org/3/search/movie?${query}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
